@@ -173,10 +173,10 @@ def ServerSecurityModeMiddleware(get_response):
             base_config = config or get_config(resolve_plugins=False)
             if base_config.SERVER_SECURITY_MODE == "auto" and request.method.upper() not in allowed_methods:
                 request_host, _request_port = split_host_port((request.get_host() or "").lower())
-                base_host, _base_port = split_host_port(get_base_host(config=base_config))
-                admin_host, _admin_port = split_host_port(get_admin_host(config=base_config))
-                api_host, _api_port = split_host_port(get_api_host(config=base_config))
-                web_host, _web_port = split_host_port(get_web_host(config=base_config))
+                base_host, _base_port = split_host_port(get_base_host(request=request, config=base_config))
+                admin_host, _admin_port = split_host_port(get_admin_host(request=request, config=base_config))
+                api_host, _api_port = split_host_port(get_api_host(request=request, config=base_config))
+                web_host, _web_port = split_host_port(get_web_host(request=request, config=base_config))
                 control_hosts = {host for host in (base_host, admin_host, api_host, web_host) if host}
                 first_run_setup_request = not base_config.BASE_URL and (
                     request.path == "/admin/login/"
